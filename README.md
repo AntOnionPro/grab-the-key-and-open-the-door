@@ -31,8 +31,25 @@ Un explorador se adentra en un entorno de plataformas con una única misión: **
 *   **Lenguaje de Programación:** GDScript
 *   **Gestión de Versiones (Git):** 
     *   Rama `main` para versiones estables.
-    *   Rama `dev` para iteración y resolución de issues.
+    *   Rama `development` para iteración y resolución de issues.
 *   **Gestión de Proyectos:** GitHub Projects estructurado en formato Kanban (To Do, In Progress, Done).
+
+### 🧪 Integración continua
+
+Cada PR hacia `main` o `development` corre el workflow [`godot-ci.yml`](.github/workflows/godot-ci.yml), con dos checks obligatorios para fusionar:
+
+*   **`gdscript-lint`:** revisa el formato (`gdformat`) y el estilo (`gdlint`) de los scripts `.gd`.
+*   **`godot-import`:** importa el proyecto con Godot en modo headless y carga cada escena, script y recurso. Falla si Godot reporta cualquier error.
+
+Para revisar lo mismo en tu computadora antes de hacer push (requiere Python):
+
+```bash
+pip install gdtoolkit==4.5.0
+gdformat grab-the-key-and-open-the-door   # corrige el formato
+gdlint grab-the-key-and-open-the-door     # muestra problemas de estilo
+```
+
+Si el equipo actualiza la versión de Godot, hay que cambiar `GODOT_VERSION` en el workflow en el mismo PR.
 
 ### 🔗 Enlaces del Proyecto
 *   **Repositorio:** [Grab the key and open the door (GitHub)](https://github.com/AntOnionPro/grab-the-key-and-open-the-door)
