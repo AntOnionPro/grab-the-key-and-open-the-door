@@ -11,6 +11,9 @@ extends CharacterBody2D
 ## Segundos que tarda en llegar a la altura máxima del salto.
 @export var tiempo_hasta_cima: float = 0.35
 
+## true cuando ya tomó la llave del nivel. Lo pone la llave y lo revisa la puerta.
+var tiene_llave := false
+
 var _gravedad: float
 var _velocidad_salto: float
 

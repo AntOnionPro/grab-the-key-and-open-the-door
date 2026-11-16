@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://puerta/puerta.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://puerta/puerta.png" id="2_textura"]
+[ext_resource type="AudioStream" path="res://puerta/puerta.wav" id="3_sonido"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puerta"]
+size = Vector2(10, 28)
+
+[node name="Puerta" type="Area2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_textura")
+hframes = 2
+
+[node name="Colision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_puerta")
+
+[node name="Sonido" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_sonido")
