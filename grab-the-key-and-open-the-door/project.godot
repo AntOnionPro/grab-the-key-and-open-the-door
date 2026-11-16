@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="grab-the-key-and-open-the-door"
-run/main_scene="res://pruebas/escena_prueba.tscn"
+run/main_scene="res://menu/menu.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GestorNiveles="*res://niveles/gestor_niveles.gd"
+Musica="*res://musica/musica.gd"
 
 [display]
 

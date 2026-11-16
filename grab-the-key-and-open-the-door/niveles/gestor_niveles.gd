@@ -1,5 +1,6 @@
 extends Node
-## Sabe qué niveles hay, en qué orden y cuál se está jugando.
+## Sabe qué niveles hay, en qué orden y cuál se está jugando, y hace los cambios de escena
+## entre el menú, los niveles y Game Over.
 ##
 ## Es un autoload (Proyecto → Configuración del proyecto → Globales) con el nombre
 ## GestorNiveles, así que existe en todas las escenas y no se reinicia al cambiar de nivel.
@@ -14,6 +15,9 @@ const NIVELES: Array[String] = [
 	"res://pruebas/escena_prueba.tscn",
 	"res://pruebas/escena_prueba.tscn",
 ]
+
+const ESCENA_MENU := "res://menu/menu.tscn"
+const ESCENA_GAME_OVER := "res://game_over/game_over.tscn"
 
 ## Posición en NIVELES del nivel que se está jugando (0 es el nivel 1).
 var indice_actual := 0
@@ -34,14 +38,18 @@ func siguiente_nivel() -> void:
 		indice_actual += 1
 		_cargar_nivel_actual()
 	else:
-		_terminar_juego()
+		# Fin del juego: se regresa al menú (GDD, Guión).
+		ir_al_menu()
+
+
+func ir_al_menu() -> void:
+	get_tree().change_scene_to_file(ESCENA_MENU)
+
+
+## La llama #3 cuando el jugador pierde los 3 corazones.
+func mostrar_game_over() -> void:
+	get_tree().change_scene_to_file(ESCENA_GAME_OVER)
 
 
 func _cargar_nivel_actual() -> void:
 	get_tree().change_scene_to_file(NIVELES[indice_actual])
-
-
-func _terminar_juego() -> void:
-	# TEMPORAL (#1): todavía no hay menú, así que se vuelve a empezar desde el primer nivel.
-	# #2 cambia esto para cargar el menú principal.
-	iniciar_partida()
