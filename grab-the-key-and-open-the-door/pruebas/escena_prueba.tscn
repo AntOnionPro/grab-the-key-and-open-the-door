@@ -1,0 +1,69 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://jugador/jugador.tscn" id="1_jugador"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_suelo"]
+size = Vector2(320, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plataforma"]
+size = Vector2(64, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pared"]
+size = Vector2(16, 180)
+
+[node name="EscenaPrueba" type="Node2D"]
+
+[node name="Fondo" type="ColorRect" parent="."]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.207843, 0.309804, 0.278431, 1)
+
+[node name="Suelo" type="StaticBody2D" parent="."]
+position = Vector2(160, 172)
+
+[node name="Colision" type="CollisionShape2D" parent="Suelo"]
+shape = SubResource("RectangleShape2D_suelo")
+
+[node name="Tierra" type="Polygon2D" parent="Suelo"]
+color = Color(0.572549, 0.360784, 0.262745, 1)
+polygon = PackedVector2Array(-160, -8, 160, -8, 160, 8, -160, 8)
+
+[node name="Pasto" type="Polygon2D" parent="Suelo"]
+color = Color(0.4, 0.666667, 0.219608, 1)
+polygon = PackedVector2Array(-160, -8, 160, -8, 160, -5, -160, -5)
+
+[node name="Plataforma1" type="StaticBody2D" parent="."]
+position = Vector2(112, 140)
+
+[node name="Colision" type="CollisionShape2D" parent="Plataforma1"]
+shape = SubResource("RectangleShape2D_plataforma")
+
+[node name="Piedra" type="Polygon2D" parent="Plataforma1"]
+color = Color(0.560784, 0.529412, 0.576471, 1)
+polygon = PackedVector2Array(-32, -4, 32, -4, 32, 4, -32, 4)
+
+[node name="Plataforma2" type="StaticBody2D" parent="."]
+position = Vector2(208, 112)
+
+[node name="Colision" type="CollisionShape2D" parent="Plataforma2"]
+shape = SubResource("RectangleShape2D_plataforma")
+
+[node name="Piedra" type="Polygon2D" parent="Plataforma2"]
+color = Color(0.560784, 0.529412, 0.576471, 1)
+polygon = PackedVector2Array(-32, -4, 32, -4, 32, 4, -32, 4)
+
+[node name="ParedIzquierda" type="StaticBody2D" parent="."]
+position = Vector2(-8, 90)
+
+[node name="Colision" type="CollisionShape2D" parent="ParedIzquierda"]
+shape = SubResource("RectangleShape2D_pared")
+
+[node name="ParedDerecha" type="StaticBody2D" parent="."]
+position = Vector2(328, 90)
+
+[node name="Colision" type="CollisionShape2D" parent="ParedDerecha"]
+shape = SubResource("RectangleShape2D_pared")
+
+[node name="Jugador" parent="." instance=ExtResource("1_jugador")]
+position = Vector2(32, 164)
