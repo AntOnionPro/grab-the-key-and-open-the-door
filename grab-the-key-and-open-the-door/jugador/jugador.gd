@@ -55,16 +55,16 @@ func _physics_process(delta: float) -> void:
 	_actualizar_animacion(direccion)
 
 
-## Quita un corazón: el jugador se queda quieto, suena el efecto y después reaparece al
-## inicio del nivel (o se muestra Game Over si era el último). La llaman la piedra y la
-## caída al vacío. Si ya estaba herido no hace nada, así un golpe resta un solo corazón
-## aunque siga tocando la piedra varios fotogramas.
+## Quita un corazón: el jugador se queda quieto con la pose de herido, suena el efecto y
+## después reaparece al inicio del nivel (o se muestra Game Over si era el último). La
+## llaman la piedra y la caída al vacío. Si ya estaba herido no hace nada, así un golpe resta
+## un solo corazón aunque siga tocando la piedra varios fotogramas.
 func recibir_dano() -> void:
 	if _herido:
 		return
 	_herido = true
 	set_physics_process(false)
-	_sprite.pause()
+	_sprite.play("herido")
 	GestorNiveles.perder_corazon()
 	# Se espera a que termine el sonido antes de recargar el nivel: si se recargara antes,
 	# el sonido se cortaría.
