@@ -1,3 +1,13 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Credenciales de exportación (Godot 4 las guarda en .godot/; esto cubre copias sueltas).
+# export_presets.cfg sí se versiona para que el equipo comparta los presets.
+export_credentials.cfg
+
+# Temporales que crea el editor al guardar escenas y recursos
+*.tmp
+
+# Traducciones importadas (Godot las genera a partir de los CSV)
+*.translation

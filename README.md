@@ -54,6 +54,7 @@ Si el equipo actualiza la versión de Godot, hay que cambiar `GODOT_VERSION` en 
 ### 🔗 Enlaces del Proyecto
 *   **Repositorio:** [Grab the key and open the door (GitHub)](https://github.com/AntOnionPro/grab-the-key-and-open-the-door)
 *   **Tablero de Tareas:** [GitHub Project Board](https://github.com/users/AntOnionPro/projects/3)
+*   **Documentación:** [docs/](docs/) (GDD y guía de nomenclatura de ramas y commits)
 
 ## 🎵 Audio
 *   **Música:** Pista de fondo en bucle con estilo 8-bit.

@@ -1,0 +1,37 @@
+# Reglas para todo el repositorio. Las específicas de Godot están en
+# grab-the-key-and-open-the-door/.gitignore
+
+# Sistema operativo
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Editores e IDEs (configuración personal de cada integrante)
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (entorno virtual para gdtoolkit: gdformat / gdlint)
+.venv/
+venv/
+__pycache__/
+
+# Exportaciones del juego. Exporta a builds/ en la raíz del repo, fuera del proyecto
+# de Godot, para que el editor no intente importar los ejecutables.
+/builds/
+*.exe
+*.pck
+*.apk
+*.aab
+*.x86_64
+*.dmg
+
+# Asistentes de código (LLM): reglas y configuración personales. Cada integrante
+# mantiene las suyas según el asistente que use; no se versionan.
+CLAUDE.md
+CLAUDE.local.md
+.claude/settings.local.json
