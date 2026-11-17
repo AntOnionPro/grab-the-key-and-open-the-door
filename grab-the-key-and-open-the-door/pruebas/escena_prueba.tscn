@@ -1,0 +1,47 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://niveles/fondo.png" id="1_fondo"]
+[ext_resource type="TileSet" path="res://niveles/tiles.tres" id="2_tiles"]
+[ext_resource type="PackedScene" path="res://puerta/puerta.tscn" id="3_puerta"]
+[ext_resource type="PackedScene" path="res://llave/llave.tscn" id="4_llave"]
+[ext_resource type="PackedScene" path="res://jugador/jugador.tscn" id="5_jugador"]
+[ext_resource type="PackedScene" path="res://hud/hud.tscn" id="6_hud"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pared"]
+size = Vector2(16, 180)
+
+[node name="EscenaPrueba" type="Node2D"]
+
+[node name="Fondo" type="TextureRect" parent="."]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("1_fondo")
+stretch_mode = 1
+
+[node name="Terreno" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAoAAAAAAAAAAAAAAAsAAAABAAAAAAABAAoAAAAAAAAAAAABAAsAAAABAAAAAAACAAoAAAAAAAAAAAACAAsAAAABAAAAAAADAAoAAAAAAAAAAAADAAsAAAABAAAAAAAEAAoAAAAAAAAAAAAEAAsAAAABAAAAAAAFAAoAAAAAAAAAAAAFAAsAAAABAAAAAAAGAAoAAAAAAAAAAAAGAAsAAAABAAAAAAAHAAoAAAAAAAAAAAAHAAsAAAABAAAAAAAIAAoAAAAAAAAAAAAIAAsAAAABAAAAAAAJAAoAAAAAAAAAAAAJAAsAAAABAAAAAAAKAAoAAAAAAAAAAAAKAAsAAAABAAAAAAALAAoAAAAAAAAAAAALAAsAAAABAAAAAAAMAAoAAAAAAAAAAAAMAAsAAAABAAAAAAANAAoAAAAAAAAAAAANAAsAAAABAAAAAAAOAAoAAAAAAAAAAAAOAAsAAAABAAAAAAAPAAoAAAAAAAAAAAAPAAsAAAABAAAAAAAQAAoAAAAAAAAAAAAQAAsAAAABAAAAAAARAAoAAAAAAAAAAAARAAsAAAABAAAAAAASAAoAAAAAAAAAAAASAAsAAAABAAAAAAATAAoAAAAAAAAAAAATAAsAAAABAAAAAAADAAgAAAACAAAAAAAEAAgAAAADAAAAAAAFAAgAAAADAAAAAAAGAAgAAAAEAAAAAAAJAAYAAAACAAAAAAAKAAYAAAADAAAAAAALAAYAAAADAAAAAAAMAAYAAAAEAAAAAAA=")
+tile_set = ExtResource("2_tiles")
+
+[node name="ParedIzquierda" type="StaticBody2D" parent="."]
+position = Vector2(-8, 90)
+
+[node name="Colision" type="CollisionShape2D" parent="ParedIzquierda"]
+shape = SubResource("RectangleShape2D_pared")
+
+[node name="ParedDerecha" type="StaticBody2D" parent="."]
+position = Vector2(328, 90)
+
+[node name="Colision" type="CollisionShape2D" parent="ParedDerecha"]
+shape = SubResource("RectangleShape2D_pared")
+
+[node name="Puerta" parent="." instance=ExtResource("3_puerta")]
+position = Vector2(296, 160)
+
+[node name="Llave" parent="." instance=ExtResource("4_llave")]
+position = Vector2(176, 88)
+
+[node name="Jugador" parent="." instance=ExtResource("5_jugador")]
+position = Vector2(24, 160)
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
