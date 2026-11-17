@@ -59,6 +59,7 @@ Si el equipo actualiza la versión de Godot, hay que cambiar `GODOT_VERSION` en 
 ## 🎵 Audio
 *   **Música:** Pista de fondo en bucle con estilo 8-bit.
 *   **Efectos de Sonido (SFX):** Sonidos específicos para el salto, recolección de llave, apertura de puerta, y pérdida de vida/reaparición (Recursos de uso libre con licencia comercial/educativa).
+*   **Música:** "Tema principal", pista 8-bit en bucle de creación propia, generada por código (`musica/tema_principal.wav`).
 
 ## 👥 Créditos
 

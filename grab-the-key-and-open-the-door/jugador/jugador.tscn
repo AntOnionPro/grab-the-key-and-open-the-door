@@ -1,61 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://jugador/jugador.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://jugador/kip.png" id="2_kip"]
+[ext_resource type="SpriteFrames" path="res://jugador/kip_frames.tres" id="2_frames"]
 [ext_resource type="AudioStream" path="res://jugador/salto.wav" id="3_salto"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_inactivo"]
-atlas = ExtResource("2_kip")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_caminar_1"]
-atlas = ExtResource("2_kip")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_caminar_2"]
-atlas = ExtResource("2_kip")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_caminar_3"]
-atlas = ExtResource("2_kip")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_salto"]
-atlas = ExtResource("2_kip")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kip"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_caminar_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_caminar_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_caminar_3")
-}],
-"loop": true,
-"name": &"caminar",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_inactivo")
-}],
-"loop": true,
-"name": &"inactivo",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_salto")
-}],
-"loop": false,
-"name": &"saltar",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cuerpo"]
 size = Vector2(8, 14)
@@ -65,7 +12,7 @@ script = ExtResource("1_script")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
-sprite_frames = SubResource("SpriteFrames_kip")
+sprite_frames = ExtResource("2_frames")
 animation = &"inactivo"
 autoplay = "inactivo"
 
