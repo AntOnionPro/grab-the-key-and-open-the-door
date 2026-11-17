@@ -1,6 +1,7 @@
 extends Node
 ## Sabe qué niveles hay, en qué orden y cuál se está jugando, y hace los cambios de escena
-## entre el menú, los niveles y Game Over.
+## entre el menú, los niveles y Game Over. También lleva los corazones que le quedan al
+## jugador en el nivel actual.
 ##
 ## Es un autoload (Proyecto → Configuración del proyecto → Globales) con el nombre
 ## GestorNiveles, así que existe en todas las escenas y no se reinicia al cambiar de nivel.
@@ -19,8 +20,14 @@ const NIVELES: Array[String] = [
 const ESCENA_MENU := "res://menu/menu.tscn"
 const ESCENA_GAME_OVER := "res://game_over/game_over.tscn"
 
+## Corazones con los que el jugador empieza cada nivel.
+const CORAZONES_INICIALES := 3
+
 ## Posición en NIVELES del nivel que se está jugando (0 es el nivel 1).
 var indice_actual := 0
+## Corazones que le quedan al jugador en el nivel actual. Vuelven a CORAZONES_INICIALES
+## cada vez que se carga un nivel, pero no al reaparecer.
+var corazones := CORAZONES_INICIALES
 
 
 ## Número del nivel actual contando desde 1, para mostrarlo en pantalla.
@@ -46,10 +53,23 @@ func ir_al_menu() -> void:
 	get_tree().change_scene_to_file(ESCENA_MENU)
 
 
-## La llama #3 cuando el jugador pierde los 3 corazones.
+## La llama perder_corazon() cuando el jugador se queda sin corazones.
 func mostrar_game_over() -> void:
 	get_tree().change_scene_to_file(ESCENA_GAME_OVER)
 
 
+## Resta un corazón. Si todavía le quedan, el jugador reaparece al inicio del nivel actual;
+## si era el último, se muestra Game Over.
+func perder_corazon() -> void:
+	corazones -= 1
+	if corazones > 0:
+		# Recargar la escena deja el nivel como al principio: el jugador en el punto de
+		# inicio y la llave en su lugar. Los corazones no se pierden porque viven aquí.
+		get_tree().reload_current_scene()
+	else:
+		mostrar_game_over()
+
+
 func _cargar_nivel_actual() -> void:
+	corazones = CORAZONES_INICIALES
 	get_tree().change_scene_to_file(NIVELES[indice_actual])
