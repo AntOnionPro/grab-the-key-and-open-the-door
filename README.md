@@ -68,4 +68,5 @@ Desarrollado como proyecto para la **Universidad Tecnológica de Hermosillo, Son
 *   **Desarrollo y Programación:** Antonio de Jesus Zamorano y Jesús Efrén Campuzano.
 *   **Arte y Sprites:** Recursos de uso libre y creación propia.
 *   **Corazones, piedra y efecto de daño:** creación propia del equipo, sin licencias de terceros (`hud/corazones.png`, `obstaculos/piedra.png`, `jugador/dano.wav`).
+*   **Liana:** creación propia del equipo, sin licencias de terceros (`obstaculos/liana.png`, `obstaculos/liana_punta.png`).
 *   **Fecha:** Noviembre, 2026.
