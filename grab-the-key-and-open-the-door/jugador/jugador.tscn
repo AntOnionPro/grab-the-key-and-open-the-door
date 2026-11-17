@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://jugador/jugador.gd" id="1_script"]
 [ext_resource type="SpriteFrames" path="res://jugador/kip_frames.tres" id="2_frames"]
 [ext_resource type="AudioStream" path="res://jugador/salto.wav" id="3_salto"]
+[ext_resource type="AudioStream" path="res://jugador/dano.wav" id="4_dano"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cuerpo"]
 size = Vector2(8, 14)
@@ -22,3 +23,6 @@ shape = SubResource("RectangleShape2D_cuerpo")
 
 [node name="SonidoSalto" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_salto")
+
+[node name="SonidoDano" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dano")
