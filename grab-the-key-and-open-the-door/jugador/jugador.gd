@@ -65,11 +65,12 @@ func recibir_dano() -> void:
 	_herido = true
 	set_physics_process(false)
 	_sprite.pause()
+	GestorNiveles.perder_corazon()
 	# Se espera a que termine el sonido antes de recargar el nivel: si se recargara antes,
 	# el sonido se cortaría.
 	_sonido_dano.play()
 	await _sonido_dano.finished
-	GestorNiveles.perder_corazon()
+	GestorNiveles.reaparecer()
 
 
 func _actualizar_animacion(direccion: float) -> void:

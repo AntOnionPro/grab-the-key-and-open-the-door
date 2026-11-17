@@ -6,6 +6,9 @@ extends Node
 ## Es un autoload (Proyecto → Configuración del proyecto → Globales) con el nombre
 ## GestorNiveles, así que existe en todas las escenas y no se reinicia al cambiar de nivel.
 
+## Se emite cuando el jugador pierde un corazón, para que el HUD lo muestre en ese momento.
+signal corazones_cambiaron(cantidad: int)
+
 ## Total de niveles del juego; es el número que muestra el contador "Nivel X / 10".
 const TOTAL_NIVELES := 10
 
@@ -53,15 +56,21 @@ func ir_al_menu() -> void:
 	get_tree().change_scene_to_file(ESCENA_MENU)
 
 
-## La llama perder_corazon() cuando el jugador se queda sin corazones.
+## La llama reaparecer() cuando el jugador se quedó sin corazones.
 func mostrar_game_over() -> void:
 	get_tree().change_scene_to_file(ESCENA_GAME_OVER)
 
 
-## Resta un corazón. Si todavía le quedan, el jugador reaparece al inicio del nivel actual;
-## si era el último, se muestra Game Over.
+## Resta un corazón. La llama el jugador en el momento del golpe, así el HUD vacía el
+## corazón de inmediato (Storyboard, escena 07), antes de reaparecer.
 func perder_corazon() -> void:
-	corazones -= 1
+	corazones = maxi(corazones - 1, 0)
+	corazones_cambiaron.emit(corazones)
+
+
+## Después del efecto de daño: si le quedan corazones, el jugador reaparece al inicio del
+## nivel actual; si no, se muestra Game Over.
+func reaparecer() -> void:
 	if corazones > 0:
 		# Recargar la escena deja el nivel como al principio: el jugador en el punto de
 		# inicio y la llave en su lugar. Los corazones no se pierden porque viven aquí.
