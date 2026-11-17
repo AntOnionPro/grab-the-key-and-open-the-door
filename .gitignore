@@ -30,6 +30,8 @@ __pycache__/
 *.x86_64
 *.dmg
 
-# Claude Code: configuración personal (la compartida va en CLAUDE.md)
-.claude/settings.local.json
+# Asistentes de código (LLM): reglas y configuración personales. Cada integrante
+# mantiene las suyas según el asistente que use; no se versionan.
+CLAUDE.md
 CLAUDE.local.md
+.claude/settings.local.json
