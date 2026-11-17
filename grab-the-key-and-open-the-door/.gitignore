@@ -11,3 +11,5 @@ export_credentials.cfg
 
 # Traducciones importadas (Godot las genera a partir de los CSV)
 *.translation
+
+tools/ci/verificar_proyecto.gd.uid
