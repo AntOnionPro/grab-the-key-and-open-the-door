@@ -1,8 +1,8 @@
 @tool
 class_name Liana
 extends Node2D
-## Liana colgante: el jugador se agarra al tocarla en el aire, se columpia como péndulo con ←/→
-## y se suelta con Espacio conservando el impulso. No hace daño.
+## Liana colgante: el jugador se agarra al tocarla en el aire, se columpia como péndulo con ←/→,
+## sube y baja por ella con ↑/↓ y se suelta con Espacio conservando el impulso. No hace daño.
 ##
 ## El origen de la escena es el punto del que cuelga (arriba), para colocarla justo debajo de una
 ## plataforma. Al columpiarse gira completa alrededor de ese punto, así que no se rota en el
@@ -106,6 +106,22 @@ func sujetar(punto_manos: Vector2, velocidad: Vector2) -> void:
 func columpiar(direccion: float, delta: float) -> Vector2:
 	_avanzar(direccion, _radio, delta)
 	return global_position + _direccion() * _radio
+
+
+## Mueve las manos del jugador colgado a lo largo de la liana, en píxeles: negativo sube y
+## positivo baja. No pasa del anclaje (RADIO_MINIMO) ni de la punta. Devuelve true si se movió.
+##
+## La velocidad angular no cambia: al subir, ese punto de la liana va más lento, y soltar() ya
+## calcula la velocidad con la distancia nueva.
+func trepar(distancia: float) -> bool:
+	var radio_anterior := _radio
+	_radio = clampf(_radio + distancia, RADIO_MINIMO, _largo())
+	return _radio != radio_anterior
+
+
+## true si las manos del jugador colgado están lo más arriba que se puede trepar.
+func en_lo_alto() -> bool:
+	return _radio <= RADIO_MINIMO
 
 
 ## Suelta al jugador y devuelve su velocidad, en píxeles por segundo: la del columpio en el punto

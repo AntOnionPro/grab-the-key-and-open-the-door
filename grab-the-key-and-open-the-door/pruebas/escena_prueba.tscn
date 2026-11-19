@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=4 uid="uid://cx412rrdwoate"]
 
-[ext_resource type="Texture2D" path="res://niveles/fondo.png" id="1_fondo"]
+[ext_resource type="Texture2D" uid="uid://2hfnqb0si54g" path="res://niveles/fondo.png" id="1_fondo"]
 [ext_resource type="TileSet" path="res://niveles/tiles.tres" id="2_tiles"]
 [ext_resource type="PackedScene" path="res://puerta/puerta.tscn" id="3_puerta"]
 [ext_resource type="PackedScene" path="res://llave/llave.tscn" id="4_llave"]
@@ -12,45 +12,45 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pared"]
 size = Vector2(16, 180)
 
-[node name="EscenaPrueba" type="Node2D"]
+[node name="EscenaPrueba" type="Node2D" unique_id=223715245]
 
-[node name="Fondo" type="TextureRect" parent="."]
+[node name="Fondo" type="TextureRect" parent="." unique_id=346785435]
 offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
 texture = ExtResource("1_fondo")
 stretch_mode = 1
 
-[node name="Terreno" type="TileMapLayer" parent="."]
+[node name="Terreno" type="TileMapLayer" parent="." unique_id=1478380154]
 tile_map_data = PackedByteArray("AAAAAAoAAAAAAAAAAAAAAAsAAAABAAAAAAABAAoAAAAAAAAAAAABAAsAAAABAAAAAAACAAoAAAAAAAAAAAACAAsAAAABAAAAAAADAAoAAAAAAAAAAAADAAsAAAABAAAAAAAEAAoAAAAAAAAAAAAEAAsAAAABAAAAAAAFAAoAAAAAAAAAAAAFAAsAAAABAAAAAAAMAAoAAAAAAAAAAAAMAAsAAAABAAAAAAANAAoAAAAAAAAAAAANAAsAAAABAAAAAAAOAAoAAAAAAAAAAAAOAAsAAAABAAAAAAAPAAoAAAAAAAAAAAAPAAsAAAABAAAAAAAQAAoAAAAAAAAAAAAQAAsAAAABAAAAAAARAAoAAAAAAAAAAAARAAsAAAABAAAAAAASAAoAAAAAAAAAAAASAAsAAAABAAAAAAATAAoAAAAAAAAAAAATAAsAAAABAAAAAAACAAgAAAACAAAAAAADAAgAAAADAAAAAAAEAAgAAAAEAAAAAAAHAAMAAAACAAAAAAAIAAMAAAADAAAAAAAJAAMAAAAEAAAAAAA=")
 tile_set = ExtResource("2_tiles")
 
-[node name="ParedIzquierda" type="StaticBody2D" parent="."]
+[node name="ParedIzquierda" type="StaticBody2D" parent="." unique_id=1698561470]
 position = Vector2(-8, 90)
 
-[node name="Colision" type="CollisionShape2D" parent="ParedIzquierda"]
+[node name="Colision" type="CollisionShape2D" parent="ParedIzquierda" unique_id=50153334]
 shape = SubResource("RectangleShape2D_pared")
 
-[node name="ParedDerecha" type="StaticBody2D" parent="."]
+[node name="ParedDerecha" type="StaticBody2D" parent="." unique_id=40648285]
 position = Vector2(328, 90)
 
-[node name="Colision" type="CollisionShape2D" parent="ParedDerecha"]
+[node name="Colision" type="CollisionShape2D" parent="ParedDerecha" unique_id=531425911]
 shape = SubResource("RectangleShape2D_pared")
 
-[node name="Puerta" parent="." instance=ExtResource("3_puerta")]
+[node name="Puerta" parent="." unique_id=1468797026 instance=ExtResource("3_puerta")]
 position = Vector2(296, 160)
 
-[node name="Llave" parent="." instance=ExtResource("4_llave")]
-position = Vector2(56, 120)
+[node name="Llave" parent="." unique_id=1859350244 instance=ExtResource("4_llave")]
+position = Vector2(152, 40)
 
-[node name="Piedra" parent="." instance=ExtResource("7_piedra")]
+[node name="Piedra" parent="." unique_id=252069006 instance=ExtResource("7_piedra")]
 position = Vector2(272, 160)
 
-[node name="Liana" parent="." instance=ExtResource("8_liana")]
+[node name="Liana" parent="." unique_id=469769574 instance=ExtResource("8_liana")]
 position = Vector2(136, 54)
 tramos = 5
 
-[node name="Jugador" parent="." instance=ExtResource("5_jugador")]
+[node name="Jugador" parent="." unique_id=127798866 instance=ExtResource("5_jugador")]
 position = Vector2(24, 160)
 
-[node name="HUD" parent="." instance=ExtResource("6_hud")]
+[node name="HUD" parent="." unique_id=2102603601 instance=ExtResource("6_hud")]
