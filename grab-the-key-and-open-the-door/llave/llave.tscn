@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://llave/llave.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://llave/llave.png" id="2_textura"]
+[ext_resource type="AudioStream" path="res://llave/llave.wav" id="3_sonido"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_llave"]
+size = Vector2(8, 14)
+
+[node name="Llave" type="Area2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_textura")
+
+[node name="Colision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_llave")
+
+[node name="Sonido" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_sonido")

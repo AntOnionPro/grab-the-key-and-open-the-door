@@ -1,0 +1,66 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://hud/hud.gd" id="1_script"]
+[ext_resource type="FontFile" path="res://fuentes/fuente_pixel.fnt" id="2_fuente"]
+[ext_resource type="Texture2D" path="res://hud/corazones.png" id="3_corazones"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lleno"]
+atlas = ExtResource("3_corazones")
+region = Rect2(0, 0, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vacio"]
+atlas = ExtResource("3_corazones")
+region = Rect2(9, 0, 9, 8)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_script")
+corazon_lleno = SubResource("AtlasTexture_lleno")
+corazon_vacio = SubResource("AtlasTexture_vacio")
+
+[node name="ContadorNivel" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -15.0
+offset_right = 124.0
+offset_bottom = -4.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.941176, 1)
+theme_override_colors/font_shadow_color = Color(0.160784, 0.156863, 0.235294, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("2_fuente")
+theme_override_font_sizes/font_size = 10
+text = "Nivel 1 / 10"
+uppercase = true
+
+[node name="Corazones" type="HBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -13.0
+offset_right = -4.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Corazon1" type="TextureRect" parent="Corazones"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_lleno")
+
+[node name="Corazon2" type="TextureRect" parent="Corazones"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_lleno")
+
+[node name="Corazon3" type="TextureRect" parent="Corazones"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_lleno")

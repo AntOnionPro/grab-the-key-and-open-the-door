@@ -1,0 +1,95 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://btifrnyoajv5i"]
+
+[ext_resource type="Texture2D" uid="uid://bqixlj2kuq0iq" path="res://jugador/kip.png" id="1_kip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caminar_1"]
+atlas = ExtResource("1_kip")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caminar_2"]
+atlas = ExtResource("1_kip")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caminar_3"]
+atlas = ExtResource("1_kip")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_colgado"]
+atlas = ExtResource("1_kip")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_herido"]
+atlas = ExtResource("1_kip")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inactivo"]
+atlas = ExtResource("1_kip")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_salto"]
+atlas = ExtResource("1_kip")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trepar"]
+atlas = ExtResource("1_kip")
+region = Rect2(112, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caminar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caminar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caminar_3")
+}],
+"loop": 1,
+"name": &"caminar",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_colgado")
+}],
+"loop": 0,
+"name": &"colgado",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_herido")
+}],
+"loop": 0,
+"name": &"herido",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inactivo")
+}],
+"loop": 1,
+"name": &"inactivo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_salto")
+}],
+"loop": 0,
+"name": &"saltar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trepar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_colgado")
+}],
+"loop": 1,
+"name": &"trepar",
+"speed": 8.0
+}]

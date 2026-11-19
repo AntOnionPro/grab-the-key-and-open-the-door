@@ -1,0 +1,113 @@
+name: CI — Godot
+
+# Revisa en cada PR que el proyecto de Godot abra sin errores y que el GDScript cumpla el
+# formato. Issue #8.
+#
+# IMPORTANTE: los nombres de los jobs (gdscript-lint y godot-import) son los que los
+# rulesets de main y development exigen como checks obligatorios. Si se renombran, todos
+# los PRs quedan bloqueados esperando un check que ya no existe.
+
+on:
+  # Sin filtro de rutas (paths) a proposito: si un check es obligatorio y un PR no toca
+  # las rutas filtradas, el check nunca se reporta y el PR se queda bloqueado.
+  pull_request:
+    branches:
+      - main
+      - development
+  push:
+    branches:
+      - main
+      - development
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Si llega un commit nuevo al mismo PR, se cancela la ejecucion anterior.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    # -eo pipefail: sin esto, "godot ... | tee" devolveria el codigo de tee y ocultaria
+    # que Godot fallo.
+    shell: bash
+
+env:
+  # Debe coincidir con la version del editor que usa el equipo (Help → About Godot).
+  # Si alguien actualiza Godot, esta linea se cambia en el mismo PR.
+  GODOT_VERSION: 4.7.2
+  GDTOOLKIT_VERSION: 4.5.0
+  PROYECTO: grab-the-key-and-open-the-door
+
+jobs:
+  gdscript-lint:
+    name: gdscript-lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v5
+
+      # pipx ya viene instalado en los runners de GitHub.
+      - name: Instalar gdtoolkit ${{ env.GDTOOLKIT_VERSION }}
+        run: pipx install "gdtoolkit==${GDTOOLKIT_VERSION}"
+
+      # gdformat no tiene opcion para excluir carpetas, asi que la lista de archivos se arma
+      # con find. addons/ es codigo de terceros. Si no hay ningun .gd, xargs -r no ejecuta
+      # nada y el paso pasa.
+      - name: Verificar formato (gdformat)
+        run: |
+          find "$PROYECTO" -name '*.gd' -not -path '*/addons/*' -not -path '*/.godot/*' -print0 \
+            | xargs -0 -r gdformat --check
+
+      - name: Verificar lint (gdlint)
+        run: |
+          find "$PROYECTO" -name '*.gd' -not -path '*/addons/*' -not -path '*/.godot/*' -print0 \
+            | xargs -0 -r gdlint
+
+  godot-import:
+    name: godot-import
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v5
+
+      - name: Descargar Godot ${{ env.GODOT_VERSION }}
+        run: |
+          archivo="Godot_v${GODOT_VERSION}-stable_linux.x86_64"
+          cd "$RUNNER_TEMP"
+          curl -fsSL -o godot.zip \
+            "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/${archivo}.zip"
+          unzip -q godot.zip
+          mv "$archivo" godot
+          chmod +x godot
+          ./godot --version
+
+      # Importar genera la carpeta .godot/ (que no se sube al repo) y la cache de clases
+      # globales que necesitan los scripts con class_name.
+      - name: Importar el proyecto
+        timeout-minutes: 5
+        run: |
+          "$RUNNER_TEMP/godot" --headless --path "$PROYECTO" --import 2>&1 | tee importacion.log
+          if grep -q "ERROR" importacion.log; then
+            echo "::error::Godot reporto errores al importar el proyecto. Revisa el log de este paso."
+            exit 1
+          fi
+
+      # Carga cada script, escena y recurso. Godot puede terminar con codigo 0 aunque un
+      # script tenga errores de sintaxis, por eso ademas se busca "ERROR" en la salida
+      # (cubre "ERROR:" y "SCRIPT ERROR: Parse Error").
+      - name: Verificar escenas, scripts y recursos
+        timeout-minutes: 5
+        run: |
+          "$RUNNER_TEMP/godot" --headless --path "$PROYECTO" \
+            --script res://tools/ci/verificar_proyecto.gd 2>&1 | tee verificacion.log
+          if grep -q "ERROR" verificacion.log; then
+            echo "::error::Godot reporto errores al cargar el proyecto. Revisa el log de este paso."
+            exit 1
+          fi

@@ -31,16 +31,35 @@ Un explorador se adentra en un entorno de plataformas con una única misión: **
 *   **Lenguaje de Programación:** GDScript
 *   **Gestión de Versiones (Git):** 
     *   Rama `main` para versiones estables.
-    *   Rama `dev` para iteración y resolución de issues.
+    *   Rama `development` para iteración y resolución de issues.
 *   **Gestión de Proyectos:** GitHub Projects estructurado en formato Kanban (To Do, In Progress, Done).
+
+### 🧪 Integración continua
+
+Cada PR hacia `main` o `development` corre el workflow [`godot-ci.yml`](.github/workflows/godot-ci.yml), con dos checks obligatorios para fusionar:
+
+*   **`gdscript-lint`:** revisa el formato (`gdformat`) y el estilo (`gdlint`) de los scripts `.gd`.
+*   **`godot-import`:** importa el proyecto con Godot en modo headless y carga cada escena, script y recurso. Falla si Godot reporta cualquier error.
+
+Para revisar lo mismo en tu computadora antes de hacer push (requiere Python):
+
+```bash
+pip install gdtoolkit==4.5.0
+gdformat grab-the-key-and-open-the-door   # corrige el formato
+gdlint grab-the-key-and-open-the-door     # muestra problemas de estilo
+```
+
+Si el equipo actualiza la versión de Godot, hay que cambiar `GODOT_VERSION` en el workflow en el mismo PR.
 
 ### 🔗 Enlaces del Proyecto
 *   **Repositorio:** [Grab the key and open the door (GitHub)](https://github.com/AntOnionPro/grab-the-key-and-open-the-door)
 *   **Tablero de Tareas:** [GitHub Project Board](https://github.com/users/AntOnionPro/projects/3)
+*   **Documentación:** [docs/](docs/) (GDD y guía de nomenclatura de ramas y commits)
 
 ## 🎵 Audio
 *   **Música:** Pista de fondo en bucle con estilo 8-bit.
 *   **Efectos de Sonido (SFX):** Sonidos específicos para el salto, recolección de llave, apertura de puerta, y pérdida de vida/reaparición (Recursos de uso libre con licencia comercial/educativa).
+*   **Música:** "Tema principal", pista 8-bit en bucle de creación propia, generada por código (`musica/tema_principal.wav`).
 
 ## 👥 Créditos
 
@@ -48,4 +67,7 @@ Desarrollado como proyecto para la **Universidad Tecnológica de Hermosillo, Son
 
 *   **Desarrollo y Programación:** Antonio de Jesus Zamorano y Jesús Efrén Campuzano.
 *   **Arte y Sprites:** Recursos de uso libre y creación propia.
+*   **Corazones, piedra y efecto de daño:** creación propia del equipo, sin licencias de terceros (`hud/corazones.png`, `obstaculos/piedra.png`, `jugador/dano.wav`).
+*   **Liana:** creación propia del equipo, sin licencias de terceros (`obstaculos/liana.png`, `obstaculos/liana_punta.png`).
+*   **Kip trepando:** creación propia del equipo, sin licencias de terceros (fotograma 8 de `jugador/kip.png`).
 *   **Fecha:** Noviembre, 2026.
