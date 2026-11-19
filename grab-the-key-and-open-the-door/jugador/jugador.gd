@@ -2,13 +2,19 @@ class_name Jugador
 extends CharacterBody2D
 ## Personaje que controla el usuario: camina, salta y cambia de animación según lo que hace.
 ## Si cae al vacío o toca una piedra, pierde un corazón y reaparece al inicio del nivel.
-## Se agarra de las lianas al tocarlas en el aire, se columpia con ←/→ y se suelta con Espacio.
+## Se agarra de las lianas al tocarlas en el aire, se columpia con ←/→, trepa con ↑/↓ y se
+## suelta con Espacio. Desde lo alto de una liana, con ↑ se sube a la plataforma de la que cuelga.
 ##
 ## El origen de la escena está en los pies, para colocarlo en un nivel justo sobre el suelo.
 
 ## Dónde queda la mano que sujeta la liana en la animación "colgado", en píxeles desde los pies,
 ## mirando a la derecha. Si mira a la izquierda, x cambia de signo.
 const MANOS_COLGADO := Vector2(4, -15)
+## Hasta cuántos píxeles arriba del anclaje de una liana se busca una plataforma para subirse.
+const ALCANCE_PLATAFORMA := 32.0
+## Píxeles que el saltito para subirse a una plataforma pasa por encima de ella. Sin esto
+## llegaría justo a la superficie y podría quedar a medias en la plataforma atravesable.
+const HOLGURA_SUBIDA := 6.0
 
 ## Velocidad horizontal, en píxeles por segundo.
 @export var velocidad: float = 80.0
@@ -25,6 +31,8 @@ const MANOS_COLGADO := Vector2(4, -15)
 ## Qué tan rápido cambian ←/→ la velocidad horizontal en el aire después de soltarse de una
 ## liana, en píxeles por segundo al cuadrado. Es bajo para no perder el impulso del columpio.
 @export var control_aire: float = 240.0
+## Velocidad al subir o bajar por una liana, en píxeles por segundo.
+@export var velocidad_trepar: float = 40.0
 
 ## true cuando ya tomó la llave del nivel. Lo pone la llave y lo revisa la puerta.
 var tiene_llave := false
@@ -119,6 +127,17 @@ func _columpiarse(delta: float) -> void:
 		_soltar_liana(true)
 		return
 
+	# get_axis da -1 con ↑ y 1 con ↓: es lo que cambia la distancia al anclaje.
+	var eje_trepar := Input.get_axis("arriba", "abajo")
+	if eje_trepar < 0.0 and _liana.en_lo_alto():
+		var altura := _altura_plataforma()
+		if altura > 0.0:
+			_subir_a_plataforma(altura)
+			return
+
+	var trepando := _liana.trepar(eje_trepar * velocidad_trepar * delta)
+	_sprite.play("trepar" if trepando else "colgado")
+
 	var direccion := Input.get_axis("izquierda", "derecha")
 	var punto := _liana.columpiar(direccion, delta)
 	if move_and_collide(punto - _manos() - global_position) != null:
@@ -137,6 +156,31 @@ func _soltar_liana(con_impulso: bool) -> void:
 		_sonido_salto.play()
 	else:
 		velocity = Vector2.ZERO
+
+
+## Si arriba de la liana hay una plataforma atravesable donde pararse, devuelve cuántos píxeles
+## hay de los pies a su superficie; si no, devuelve 0.
+func _altura_plataforma() -> float:
+	var subida := Vector2(0.0, _liana.global_position.y - ALCANCE_PLATAFORMA - global_position.y)
+	# El camino hacia arriba tiene que estar libre. Una plataforma atravesable no lo bloquea y un
+	# bloque sólido sí: así no intenta subir si la liana cuelga de un techo.
+	if test_move(global_transform, subida):
+		return 0.0
+	# Desde arriba se baja de vuelta: lo primero que toca, si es un suelo, es la plataforma.
+	var colision := KinematicCollision2D.new()
+	if not test_move(global_transform.translated(subida), -subida, colision):
+		return 0.0
+	if colision.get_angle(up_direction) > floor_max_angle:
+		return 0.0
+	return -subida.y - colision.get_travel().length()
+
+
+## Salta derecho hacia arriba lo justo para pasar la plataforma atravesable y caer encima de
+## ella. altura es la distancia de los pies a la superficie, en píxeles.
+func _subir_a_plataforma(altura: float) -> void:
+	_soltar_liana(false)
+	velocity.y = -sqrt(2.0 * _gravedad * (altura + HOLGURA_SUBIDA))
+	_sonido_salto.play()
 
 
 ## En el aire, después de soltarse de una liana: sin tecla, o con la tecla hacia donde ya va más
